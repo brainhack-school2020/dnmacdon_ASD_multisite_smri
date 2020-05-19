@@ -8,13 +8,16 @@ Team contributors: Brainhack School
 
 ## Summary 
 
-Each project repository should have a markdown file explaining the background and objectives of the project, as well as a summary of the results, and links to the different deliverables of the project. Project reports are incorporated in the BrainHack School (BHS) [website](https://school.brainhackmtl.org/project). Note that the project summary also involves a number of key words. Those are listed on top of the [GitHub repository](https://github.com/brainhack-school2020/project_template), click `manage topics`.
-
-## Project definition 
+# Project definition 
 
 ### Background
 
-Inspired by the [Recurse Centre](https://www.recurse.com/) initiative (formally known as the "hacker school"), Brainhack School was established in 2018 with the mission to train students from a multidisciplinary background to a panoply of reproducible tools for neural data science, using a project-based approach. Following an initial 3-weeks long pilot, a 4th week was added with an intensive bootcamp, so that students could choose what tools to learn more deeply in their projects. As the course became integrated in standard curriculum at different universities, the formula seemed to be working. In order to streamline the different stages of the project, we needed some standard template and milestones to be incorporated in a github-based workflow. The "project template" project (which is also our first BHS meta-project) aims at establishing such a standardized template.
+I am a Master's student in the [CoBRA Lab](https://cobralab.ca) at McGill University, located at the Douglas Mental Health University Institute, where I study autism and brain anatomy, using structural MRI (sMRI). I have been working with a large, multi-site dataset to examine subcortical anatomy in autism, using meta-analytic techniques to combine the data from the different sites. With this project, I would like to:
+ * Find ways to evaluate different techniques for combining multisite data, including linear mixed models and ComBat, and hopefully others
+ * Learn how to compare and evaluate the performance of these different techniques
+ * Use the tools we have been learning about to make my project more transparent, easy to maintain, reproducible, and open to collaboration.
+
+Prior to coming to McGill, I was a teacher at a wonderful elementary school in Ottawa, ON. 
 
 ### Tools 
 
