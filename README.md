@@ -12,7 +12,7 @@ Team contributors: Brainhack School
 
 ### Background
 
-I am a Master's student in the [CoBRA Lab](https://cobralab.ca) at McGill University, located at the Douglas Mental Health University Institute, where I study autism and brain anatomy, using structural MRI (sMRI). I have been working with a large, multi-site dataset to examine subcortical anatomy in autism, using meta-analytic techniques to combine the data from the different sites. With this project, I would like to:
+I am a Master's student in the [CoBRA Lab](http://cobralab.ca) at McGill University, located at the Douglas Mental Health University Institute, where I study autism and brain anatomy, using structural MRI (sMRI). I have been working with a large, multi-site dataset to examine subcortical anatomy in autism, using meta-analytic techniques to combine the data from the different sites. With this project, I would like to:
  * Find ways to evaluate different techniques for combining multisite data, including linear mixed models and ComBat, and hopefully others
  * Learn how to compare and evaluate the performance of these different techniques
  * Use the tools we have been learning about to make my project more transparent, easy to maintain, reproducible, and open to collaboration.
