@@ -22,9 +22,11 @@ I would also like to:
 
 This project will make use of:
  * git and github for version control, code sharing, project management, and collaboration
- * Python
+ * Jupyter notebooks
+ * Python, including packages for linear regression and mixed models (numpy, statsmodels) and data manipulation (pandas)
  * A virtualization technology, either conda or virtual environment, to improve reproducibility
- * Python libraries for data visualization 
+ * Python libraries for data visualization (matplotlib, Seaborn) 
+ * ComBat
 
 ### Data 
 
@@ -32,32 +34,31 @@ I will be using subcortical volumes, previously derived from the [ABIDE](http://
  
 ### Deliverables
 
-At the end of this project, we will have:
- - The current markdown document, completed and revised.
- - A gallery of the student projects at Brainhack 2020.
- - Instructions on the website about how to submit a pull request to the [BrainHack School website](https://github.com/BrainhackMTL/school) in order to add the project description to the website. 
+ * github repository containing Jupyter notebooks and the subcortical volume data to be processed
+Still under construction...
 
 ## Results 
 
 ### Progress overview
 
-The project was swiftly initiated by P Bellec, based on the existing template created in 2019 by Tristan Glatard and improved by different students. It was really not that hard. Community feedback is expected to lead to rapid further improvements of this first version. 
+Coming soon...
 
 ### Tools I learned during this project
 
- * **Meta-project** P Bellec learned how to do a meta project for the first time, which is developping a framework while using it at the same time. It felt really weird, but somehow quite fun as well. 
- * **Github workflow-** The successful use of this template approach will demonstrate that it is possible to incorporate dozens of students presentation on a website collaboratively over a few weeks. 
- * **Project content** Through the project reports generated using the template, it is possible to learn about what exactly the brainhack school students are working on. 
+* git and github, particularly the features for collaboration, including the issue reporting system
+* Statistical computation using python
+* Data visualization libraries in python
+* Virtualization
+* ComBat for site harmonization
  
 ### Results 
+Coming soon...
 
-#### Deliverable 1: report template
+#### Deliverable 1: Coming Soon
 
-You are currently reading the report template! I will let you judge whether it is useful or not. If you think there is something that could be improved, please do not hesitate to open an issue [here](https://github.com/brainhack-school2020/project_template/issues) and let us know. 
 
-#### Deliverable 2: project gallery
+#### Deliverable 2: Coming Soon
 
-There is not yet a project gallery, as BHS 2020 is the first edition that will incorporate it on the website. You can still check out the [2019 BHS github organization](https://github.com/mtl-brainhack-school-2019)
 
 ##### ECG pupilometry pipeline by Marce Kauffmann 
 
