@@ -2,9 +2,7 @@
 
 # A template for project reports at BrainHack School
 
-Team contributors: Brainhack School
-
-![BrainHack School](bhs2020.png)
+Team contributors: David MacDonald, and anyone else who is interested!
 
 ## Summary 
 
@@ -12,24 +10,26 @@ Team contributors: Brainhack School
 
 ### Background
 
-I am a Master's student in the [CoBRA Lab](http://cobralab.ca) at McGill University, located at the Douglas Mental Health University Institute, where I study autism and brain anatomy, using structural MRI (sMRI). I have been working with a large, multi-site dataset to examine subcortical anatomy in autism, using meta-analytic techniques to combine the data from the different sites. With this project, I would like to:
- * Find ways to evaluate different techniques for combining multisite data, including linear mixed models and ComBat, and hopefully others
- * Learn how to compare and evaluate the performance of these different techniques
- * Use the tools we have been learning about to make my project more transparent, easy to maintain, reproducible, and open to collaboration.
+I am an elementary school teacher, and currently a Master's student in the [CoBRA Lab](http://cobralab.ca) at McGill University, located at the Douglas Mental Health University Institute, where I study autism and brain anatomy, using structural MRI (sMRI). I have been working with a large, multi-site dataset to examine subcortical anatomy in autism. Multi-site MRI datasets can be difficult to work with, as scans are typically acquired on different equipment, using different protocols, by different operators. In addition, different sites may be sampling different populations. This can result in a dataset in which a significant portion of the variance is due to non-biological factors. Up to now, I have been using meta-analytic techniques to combine the data from the different sites. With this project, I would like to learn and apply two other techniques for inter-site data harmonization:
+ * Use the open source ComBat library, which was originally intended to mitigate batch effects in genetic studies, but has since been adapted to work with neuroimaging data.
+ * Use linear mixed-effect models. 
 
-Prior to coming to McGill, I was a teacher at a wonderful elementary school in Ottawa, ON. 
+I would also like to:
+ * Use the tools we have been learning about to make my project more transparent, easy to maintain, reproducible, and open to collaboration.
+ * If time permits, find a way to compare these three site harmonization techniques systematically.
 
 ### Tools 
 
-The "project template" project will rely on the following technologies: 
- * [Markdown](https://guides.github.com/features/mastering-markdown/), to structure the text.
- * The [Hugo website framework](https://gohugo.io) which is used by the BHS website. This makes it possible to easily add the markdown project description to the website. 
- * Adding the project to the website relies on github, through pull requests. 
+This project will make use of:
+ * git and github for version control, code sharing, project management, and collaboration
+ * Python
+ * A virtualization technology, either conda or virtual environment, to improve reproducibility
+ * Python libraries for data visualization 
 
 ### Data 
 
-Ultimately, the project template will be used by all BHS participants. Data on the different projects will be aggregareted on the [following page](https://school.brainhackmtl.org/project). This will serve as an additional example gallery in the years to come for future brainhack school students. Many reports from [BHS 2019](https://github.com/mtl-brainhack-school-2019) already used this template. 
-
+I will be using subcortical volumes, previously derived from the [ABIDE](http://fcon_1000.projects.nitrc.org/indi/abide/) dataset using the [MAGeT Brain](https://github.com/CobraLab/MAGeTbrain) pipeline.  
+ 
 ### Deliverables
 
 At the end of this project, we will have:
