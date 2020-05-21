@@ -5,6 +5,7 @@
 Team contributors: David MacDonald, and anyone else who is interested!
 
 ## Summary 
+This project involves using [ComBat](https://github.com/jfortin1/ComBatHarmonization), an open-source library for multi-site data harmonization, to remove site effects from subcortical volumetric data derived from the [ABIDE](http://fcon_1000.projects.nitrc.org/indi/abide/) dataset. If time permits, I would also like to explore systematic ways of comparing different site harmonization approaches. 
 
 # Project definition 
 
