@@ -10,13 +10,18 @@ The interactive visualizations produced here would be used to verify and explore
 ## Instructions
 Run the notebook Week3-InteractiveVisualization.ipynb:
  1. Clone this repository or download the contents of this directory. It includes the data (data_trimmed.csv), and a conda environment file (harmonization.yml) with the required dependencies, and the Jupyter Notebook (Week3-InteractiveVisualization.ipynb).
- 2. Create a conda environment using harmonization.yml
+ 2. Create and activate a conda environment using harmonization.yml
 
-	conda env create -f harmonization.yml
+```
+conda env create -f harmonization.yml
+conda activate harmonization
+```
 
  3. Open the jupyter notebook
 
-	jupyter notebook Week3-InteractiveVisualization.ipynb
+```
+jupyter notebook Week3-InteractiveVisualization.ipynb
+```
 
  4. Run all cells (Cell menu -> Run All)
 
