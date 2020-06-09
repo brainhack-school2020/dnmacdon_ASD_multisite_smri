@@ -3,7 +3,7 @@
 David MacDonald
 
 ## Background
-This project uses a version of ComBat to harmonize site differences in multi-site structural MRI data, in this case from a subset of the ABIDE autism dataset. The scans were preprocessed and segmented (MAGeTBrain). The volumes of the thalamus, globus pallidus, and striatum, as computed by MAGeT Brain, are the input data here.
+This project uses a version of [ComBat](https://github.com/jfortin1/ComBatHarmonization) to harmonize site differences in multi-site structural MRI data, in this case from a subset of the [ABIDE](http://fcon_1000.projects.nitrc.org/indi/abide/) autism dataset. The scans were preprocessed and segmented using [MAGeT Brain](https://github.com/CobraLab/MAGeTbrain). The volumes of the thalamus, globus pallidus, and striatum, as computed by MAGeT Brain, are the input data here.
 
 The interactive visualizations produced here would be used to verify and explore the data. You can explore scatter plots of subcortical volumes against age and total brain volume, you can see the distributions of these volumes both before and after harmonization, and you can examine the fitted-values vs. residual plots of the site-harmonized volumes regressed on age and diagnosis.
 
