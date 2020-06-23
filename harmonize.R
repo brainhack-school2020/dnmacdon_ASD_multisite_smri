@@ -36,6 +36,9 @@ main <- function()
 	# Read in data
 	input <- read.csv(input_file)
 
+	features <- colnames(input)
+	print(features)
+
 	print("Exiting harmonize.R")
 }
 
