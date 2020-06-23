@@ -13,24 +13,31 @@ if (!("neuroCombat" %in% installed.packages()[,"Package"]))
 library(metafor)
 library(neuroCombat)
 
-# Parse the command line arguments (should only be an input file name and an output directory)
-args <- commandArgs(trailingOnly = TRUE)
-input_file = "input.csv"  # Set the default input file if none is given on the command line.
-output_dir = "output"     # Set default output directory
 
-if (length(args) == 1)
+main <- function()
 {
-	input_file <- args[1]
-} else if (length(args) >= 2 )
-{
-	input_file <- args[1]
-	output_dir <- args[2]
+	# Parse the command line arguments (should only be an input file name and an output directory)
+	args <- commandArgs(trailingOnly = TRUE)
+	print(length(args))
+	# Arguments should be input file, output directory, feature to harmonize, covariates. Minimum of 3.
+	if (length(args) < 3)
+	{
+		print("Must have at least three command line arguments: input file, output directory, feature to harmonize, then optional covariates.")
+		stop()
+	} else
+	{
+		input_file <- args[1]
+		output_dir <- args[2]
+		feature_to_harmonize <- args[3]
+		if (length(args) > 3) covars <- args[-(1:3)] # Covariates are in all of the arguments after the third.
+
+	print(paste("Using", input_file, "as input, and", output_dir, "as output directory."))
+
+	# Read in data
+	input <- read.csv(input_file)
+
+	print("Exiting harmonize.R")
 }
 
-print(paste("Using", input_file, "as input, and", output_dir, "as output directory."))
-
-# Read in data
-print( paste( "Reading data from", input_file))
-
-
-print("Exiting harmonize.R")
+# Make it so, Number One.
+main()
