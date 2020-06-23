@@ -18,27 +18,37 @@ main <- function()
 {
 	# Parse the command line arguments (should only be an input file name and an output directory)
 	args <- commandArgs(trailingOnly = TRUE)
-	print(length(args))
+	
 	# Arguments should be input file, output directory, feature to harmonize, covariates. Minimum of 3.
 	if (length(args) < 3)
 	{
-		print("Must have at least three command line arguments: input file, output directory, feature to harmonize, then optional covariates.")
-		stop()
+		print("ERROR: MUST HAVE AT LEAST THREE COMMAND LINE ARGUMENTS: input file, output directory, feature to harmonize, then optional covariates.")
+		quit(status = 10)
 	} else
 	{
 		input_file <- args[1]
 		output_dir <- args[2]
 		feature_to_harmonize <- args[3]
 		if (length(args) > 3) covars <- args[-(1:3)] # Covariates are in all of the arguments after the third.
-
+	}
 	print(paste("Using", input_file, "as input, and", output_dir, "as output directory."))
 
 	# Read in data
 	input <- read.csv(input_file)
 
+	# Extract features and make sure command line feature arguments make sense
 	features <- colnames(input)
 	print(features)
 
+	if ( (all(c(feature_to_harmonize, covars) %in% features)) )
+	{
+		print("All features exist in the dataset.")
+	} else 
+	{
+		print("ERROR: Features given on command line do not exist in the data file.")
+		quit(status = 10)
+	}
+	
 	print("Exiting harmonize.R")
 }
 
