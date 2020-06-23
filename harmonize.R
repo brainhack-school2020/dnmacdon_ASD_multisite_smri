@@ -22,25 +22,27 @@ main <- function()
 	# Arguments should be input file, output directory, feature to harmonize, covariates. Minimum of 3.
 	if (length(args) < 3)
 	{
-		print("ERROR: MUST HAVE AT LEAST THREE COMMAND LINE ARGUMENTS: input file, output directory, feature to harmonize, then optional covariates.")
+		print("ERROR: MUST HAVE AT LEAST THREE COMMAND LINE ARGUMENTS: input file, output directory,")
+		print("  filename of list of features to harmonize, then optional covariates.")
 		quit(status = 10)
 	} else
 	{
 		input_file <- args[1]
 		output_dir <- args[2]
-		feature_to_harmonize <- args[3]
+		file_features_to_harmonize <- args[3]
+		covars <- c() 
 		if (length(args) > 3) covars <- args[-(1:3)] # Covariates are in all of the arguments after the third.
 	}
 	print(paste("Using", input_file, "as input, and", output_dir, "as output directory."))
 
 	# Read in data
 	input <- read.csv(input_file)
-
+	features_to_harmonize <- readLines(file_features_to_harmonize) # readLines() gives us a vector of strings
+	
 	# Extract features and make sure command line feature arguments make sense
 	features <- colnames(input)
-	print(features)
 
-	if ( (all(c(feature_to_harmonize, covars) %in% features)) )
+	if ( (all(c(features_to_harmonize, covars) %in% features)) )
 	{
 		print("All features exist in the dataset.")
 	} else 
@@ -48,7 +50,12 @@ main <- function()
 		print("ERROR: Features given on command line do not exist in the data file.")
 		quit(status = 10)
 	}
+
+	# Harmonize data using neuroCombat
 	
+	# Output harmonized data
+
+
 	print("Exiting harmonize.R")
 }
 
