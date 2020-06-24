@@ -75,8 +75,6 @@ main <- function()
 	# Output harmonized data
 	cat(paste("Writing output to", output_file,"\n"))
 	write.csv(output, output_file, row.names=TRUE)
-
-	cat("Exiting harmonize.R\n")
 }
 
 # Make it so, Number One.
