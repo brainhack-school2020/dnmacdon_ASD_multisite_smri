@@ -38,7 +38,6 @@ main <- function()
 	# Read in data
 	features_to_harmonize <- readLines(file_features_to_harmonize) # readLines() gives us a vector of strings
 	input <- read.csv(input_file)
-	#input <- read.csv(input_file, stringsAsFactors=FALSE)
 	
 	# Extract features and make sure command line feature arguments make sense
 	features <- colnames(input)
@@ -52,12 +51,22 @@ main <- function()
 		quit(status = 10)
 	}
 
+	# If there are covariates, create a model matrix to pass to neuroCombat()
+	if(length(covars)>0)
+	{
+		formula <- as.formula(paste("~",paste(covars,collapse="+")))
+		covar_mat <- model.matrix(formula, data = input)
+	}
+
 	# Harmonize data using neuroCombat
-	# Note that neuroCombat wants observations in columns, features in rows. Output is in same format..
-	harmonized <- neuroCombat( dat = t(input[features_to_harmonize]), batch = t(input[site_feature]) )
+	# Note that neuroCombat wants observations in columns, features in rows. Output is in same format.
+	if ( exists("covar_mat") ) 
+		harmonized <- neuroCombat( dat = t(input[features_to_harmonize]), batch = t(input[site_feature]), mod = covar_mat )
+	else
+		harmonized <- neuroCombat( dat = t(input[features_to_harmonize]), batch = t(input[site_feature]) )
+
 	if ( ncol(harmonized$dat.combat) != nrow(input) ) 
 		cat("WARNING: output has different number of rows as input. May be due to blank or constant rows in input.\n")
-
 
 	# Combine the harmonized data with the site data and covariates
 	output <- cbind(t(harmonized$dat.combat), input[covars])
