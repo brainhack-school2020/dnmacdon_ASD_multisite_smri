@@ -2,15 +2,14 @@
 # R script to perform inter-site harmonization of data using neuroCombat (https://github.com/Jfortin1/ComBatHarmonization)
 
 # Ensure required packages are installed 
-installed_packages <- c("metafor","devtools")
-required_packages <- installed_packages[!(installed_packages %in% installed.packages()[,"Package"])]
+packages_to_check <- c("devtools")
+required_packages <- packages_to_check[!(packages_to_check %in% installed.packages()[,"Package"])]
 if(length(required_packages)) install.packages(required_packages)
 if (!("neuroCombat" %in% installed.packages()[,"Package"])) 
 {
 	library(devtools)
 	install_github("jfortin1/CombatHarmonization/R/neuroCombat")
 }
-library(metafor)
 library(neuroCombat)
 
 
