@@ -26,7 +26,9 @@ def main():
     parser.add_argument("X_control_level", action = 'store', help = "Level of X to be considered control")
     parser.add_argument("covars", action = "store", help = "Comma-separated column names of covariates.")
     parser.add_argument("site", action = "store", help = "Column name for site variable (used for models on non-harmonized data).")
+    parser.add_argument("output_dir", action = "store", help = "Directory for all temporary output.")
     parser.add_argument("output_file", action="store", help = "Name of file to to output the effect size measures.")
+    parser.add_argument("output_names", action="store", help = "Name of file to store display names of effect size measure batches.")
     cl_args = parser.parse_args()
 
     # Extract covariate columns from input arguments
@@ -35,6 +37,8 @@ def main():
     X = cl_args.X
     site = cl_args.site
     output_file = cl_args.output_file
+    output_names = cl_args.output_names
+    output_dir = cl_args.output_dir
     X_control_level = cl_args.X_control_level
 
     print("... X: ", X)
@@ -69,7 +73,7 @@ def main():
 
     # Create lists to collect temporary output file names, and output this batch of effect sizes.
     combat_es = pd.DataFrame(model_es, index=features)
-    combat_es_filename = "int_es_combat.csv"
+    combat_es_filename = output_dir+"/int_es_combat.csv"
     es_filenames = [combat_es_filename]
     es_names = ["Combat"]
     combat_es.to_csv(combat_es_filename)
@@ -93,7 +97,7 @@ def main():
 
     # Add filenames to list, and output effect size data.
     unh_es = pd.DataFrame(model_unh_es, index=features)
-    unh_es_filename = "int_es_unh.csv"
+    unh_es_filename = output_dir+"/int_es_unh.csv"
     es_filenames.append(unh_es_filename)
     es_names.append("Unharmonized")
     unh_es.to_csv(unh_es_filename)
@@ -119,7 +123,7 @@ def main():
                                    n2 = n_ASD))
         
     lmm_es = pd.DataFrame(lm_model_es, index=features)
-    lmm_es_filename = "int_es_lmm.csv"
+    lmm_es_filename = output_dir+"/int_es_lmm.csv"
     es_filenames.append(lmm_es_filename)
     es_names.append("Mixed_model")
     lmm_es.to_csv(lmm_es_filename)
@@ -127,8 +131,8 @@ def main():
     # -------------------- Model fitting complete, write out data -------------
     
     # Write out files containing output file names and type of data
-    pd.DataFrame(es_filenames).to_csv("es_filenames.csv", index=False, header=False)
-    pd.DataFrame(es_names).to_csv("es_names.csv", index=False, header=False)
+    pd.DataFrame(es_filenames).to_csv(output_file, index=False, header=False)
+    pd.DataFrame(es_names).to_csv(output_names, index=False, header=False)
 
     print('... Model fitting and effect size calculations complete')
 

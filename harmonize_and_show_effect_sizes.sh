@@ -91,24 +91,27 @@ while (( "$#" )); do
 	esac
 done
 
-if [[ ! -d $OUTDIR ]]; then 
-	mkdir $OUTDIR 
-fi
-
+# ----------------- Set up directories and temporary, intermediate filenames ----------------------
 INT_MASKED=int_masked.csv
 INT_HARMONIZED=harmonized_data.csv
 INT_FEATURES=int_features.csv
 INT_EFFECT_SIZES=int_es.csv
-TMP_DIR=tmp
+INT_ES_NAMES=int_es_names.csv
+TMP_DIR="$(mktemp -d -p .)"
+FP_NAME="forest-plot.png"
 
-# ------------ Run the pipeline ----------------------------------------------
+echo $TMP_DIR
+
+if [[ ! -d $OUTDIR ]]; then 
+	mkdir $OUTDIR 
+fi
+
 if [[ ! -d $TMP_DIR ]]; then
-	mkdir $TMP_DIR
-else
-	echo "Temporary directory" $TMP_DIR "already exists. Aborting to avoid overwriting data."
+	echo "Error creating temporary directory. Exiting."
 	exit 1
 fi
 
+# ------------ Run the pipeline ----------------------------------------------
 # Mask features based on QC
 ./harmonize_data_prep.py $INFILE $QC_MASK $QC_THRESH $TMP_DIR/$INT_MASKED $TMP_DIR/$INT_FEATURES
 
@@ -117,10 +120,13 @@ echo Rscript harmonize.R $TMP_DIR/$INT_MASKED $OUTDIR/$INT_HARMONIZED $TMP_DIR/$
 Rscript harmonize.R $TMP_DIR/$INT_MASKED $OUTDIR/$INT_HARMONIZED $TMP_DIR/$INT_FEATURES $SITE $X $COVAR_COMBAT $COVAR
 
 # Fit linear models and save effect size measures
-./harmonize_fit_models.py $OUTDIR/$INT_HARMONIZED $INFILE $X $CONTROL $COVAR $SITE $TMP_DIR/$INT_EFFECT_SIZES
+./harmonize_fit_models.py $OUTDIR/$INT_HARMONIZED $INFILE $X $CONTROL $COVAR $SITE $TMP_DIR $TMP_DIR/$INT_EFFECT_SIZES $TMP_DIR/$INT_ES_NAMES
 
 # Generate forest plot
-Rscript forest.R 
+Rscript forest.R $TMP_DIR/$INT_EFFECT_SIZES $TMP_DIR/$INT_ES_NAMES $OUTDIR/$FP_NAME
 
 # Remove temporary files
+echo "Removing temporary files"
 rm -R $TMP_DIR
+
+echo "Processing complete"

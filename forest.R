@@ -13,11 +13,24 @@ main <- function()
 	
 	# To do: add command line parsing, so we don't need to hard-code filenames, structure names, etc.
 	# Parse command line arguments
-
+	args <- commandArgs(trailingOnly = TRUE)
+	if (length(args) < 3)
+	{
+		cat("ERROR: MUST HAVE THREE COMMAND LINE ARGUMENTS.\n")
+		cat(" es_filenames: name of file containing the filenames of effect size measures.\n")
+		cat(" es_names: name of file containing the display names for each batch of effect size measures.\n")
+		cat(" out_file: name of output file.\n")
+	} else
+	{
+		es_filenames <- args[1]
+		es_names <- args[2]
+		out_file <- args[3]
+	}
+	
 	# Read input files
 	# Read the names of the input files and the display names of each set of data into character vectors
-	es_filenames <- readLines("es_filenames.csv")
-	es_names <- readLines("es_names.csv")
+	es_filenames <- readLines(es_filenames)
+	es_names <- readLines(es_names)
 
 	# Read the input files, format data for forestplot()
 	for (i in (1:length(es_filenames)))
@@ -42,7 +55,7 @@ main <- function()
 	upper_ci <- rbind(rep(NA,3), upper_ci)
 	
 	# Generate and save forest plot
-	png('forest_plot.png', width=1024, height=320)
+	png(out_file, width=1024, height=320)
 	forestplot(text_table,
 		   is.summary = c(TRUE, rep(FALSE,6)),		# Bold title rows 
 		   mean = cohensd, 
