@@ -97,10 +97,9 @@ INT_HARMONIZED=harmonized_data.csv
 INT_FEATURES=int_features.csv
 INT_EFFECT_SIZES=int_es.csv
 INT_ES_NAMES=int_es_names.csv
-TMP_DIR="$(mktemp -d -p .)"
 FP_NAME="forest-plot.png"
-
-echo $TMP_DIR
+# Generate tmp directory dynamically to prevent data loss.
+TMP_DIR="$(mktemp -d -p .)"
 
 if [[ ! -d $OUTDIR ]]; then 
 	mkdir $OUTDIR 

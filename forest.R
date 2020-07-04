@@ -11,7 +11,6 @@ main <- function()
 {
 	cat("Generating forest plot...\n")
 	
-	# To do: add command line parsing, so we don't need to hard-code filenames, structure names, etc.
 	# Parse command line arguments
 	args <- commandArgs(trailingOnly = TRUE)
 	if (length(args) < 3)
@@ -64,7 +63,6 @@ main <- function()
 		   fn.ci_norm = c(fpDrawNormalCI, fpDrawCircleCI, fpDrawDiamondCI),	# Different shapes for d from each model
 		   boxsize = 0.25,
 		   line.margin = unit(.1, "cm"),
-#		   lineheight = unit(1.5, "cm"),
 		   hrzl_lines = TRUE,
 		   ci.vertices = TRUE,
 		   col=fpColors(box=c("blue", "darkred", "darkgreen")),
