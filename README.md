@@ -11,21 +11,26 @@ This project involves using [ComBat](https://github.com/jfortin1/ComBatHarmoniza
 The sections below provide an introduction to the purpose and structure of the project. To run it yourself, you will need to have Docker and conda installed on your system. To run the pipeline:
 1. Download this repository.
 2. Run the containerized pipeline:
-   1.  
+   1. Change to the input directory. This contains both the data and the pipeline code: ```cd input```
+   2. Run the pipeline. You must specify where the input and output directories are. You will most likely be running the Docker container downloaded from DockerHub, however you must specify the input directory that contains the code and data. In this repository, that is the "input" folder.
+```
+docker run --rm -v path_to_repository/input/:/input/:ro -v path_to_repository/output/:/output/ dnmacdon/harmonizer:environment_only
+```
+   3. The output will be in the output directory that you specified, and will consist of a .csv file of harmonized data and a forest plot showing the comparison between three modelling methods: linear models on harmonized data, linear models on unharmonized data, and linear mixed effects models on unharmonized data. The forest plot shows the Cohen's _d_ effect size of ASD diagnosis on the volume of each of six subcortical structures, controlling for Age, Sex, and Total Brain Volume.
 
 If you wish to build the Docker container that was built in this project:
-1. From the docker directory, run bdf.sh. This creates the Dockerfile that contains the specifications for the container.
+1. From the docker directory, create the Dockerfile that contains the specifications for the container:
 ``` ./bdf.sh ```
 2. Build the container:
 ``` docker build -t harmonizer . ```
+Please be aware that building the container will use current versions of the software and libraries, which may affect results. Building the container should not be necessary to reproduce the results reported here. Only rebuild the container if you wish to make changes to the pipeline.
 
 If you wish to run the Jupyter notebooks for data exploration:
 1. First, run the pipeline. This will create a file of harmonized data that the notebooks need to run.
-2. Load the conda environment in which the notebooks will run. From the repository's root directory, run:
-``` conda env create -f harmonization.yml ```
-3. From the same directory, open the directory in jupyter and select the notebook you wish to open.
-``` jupyter notebook ```
-4. If necessary, change the directory of the input file.
+2. Load the conda environment in which the notebooks will run. From the repository's root directory, run: ``` conda env create -f harmonization.yml ```
+3. From the same directory, open the directory in jupyter and select the notebook you wish to open: ``` jupyter notebook ```
+4. Specify the name and location of the input files, if different from the names and locations already in the notebook.
+5. Run all cells.
 
 ## Project definition 
 ### Background
@@ -42,6 +47,7 @@ I would also like to:
 ### Tools 
 This project makes use of:
  * git and github for version control, code sharing, project management, and collaboration
+ * Bash scripting
  * Jupyter notebooks
  * Python, including packages for linear regression and mixed models (numpy, statsmodels) and data manipulation (pandas)
  * Conda for virtualization, to improve reproducibility
@@ -49,9 +55,10 @@ This project makes use of:
  * [ComBat](https://github.com/Jfortin1/ComBatHarmonization)
  * R, for using ComBat and for some data visualization
  * Docker, to containerize the R- and Python-based pipeline and improve reproducibility
+ * DockerHub
 
 #### ComBat
-ComBat is a tool that was developed by ---------------------------- in 2007 for mitigating batch effects in genetic data. FINISH COMBAT EXPLANATION, USE EQUATIONS FROM SLIDE.
+[ComBat](https://academic.oup.com/biostatistics/article/8/1/118/252073) is a tool for mitigating batch effects in genomic data. It has since been [adapted](https://www.biorxiv.org/content/10.1101/116541v1) for use in neuroimaging, and is now [available](https://github.com/Jfortin1/ComBatHarmonization) as an open source library in R, Python, and MATLAB for use in multi-site neuroimaging studies. ComBat harmonizes data by fitting a linear model, with location and scale (L/S) terms accounting for site-specific differences, to the data, then reconstructing each data-point without the location and scale terms. These terms are fit using an Empirical Bayes approach, allowing pooling across features to improve the estimate of site effects.
 
 ### Data 
 This project made use of subcortical volumes, previously derived from a subset (n = 359, across three sites and two releases) of the [ABIDE](http://fcon_1000.projects.nitrc.org/indi/abide/) dataset using the [MAGeT Brain](https://github.com/CobraLab/MAGeTbrain) pipeline.
@@ -82,6 +89,10 @@ I used [neurodocker 0.7.0](https://github.com/ReproNim/neurodocker) to create th
     * Cleared the apt cache.
 
 The docker container was configured to run the pipeline bash script at startup in non-interactive mode. Input and output directories are set on the command line. All code that is run in the Docker container is provided on the command line (i.e. it has not been built in to the container). This is to allow for modifications, for example to use it on a different dataset, while maintaining the same environment. That said, most options are specified on the command line, so it may not be necessary to modify the code.
+
+### Workflow
+The workflow encapsulated in the pipeline and jupyter notebooks are described in the figure below.
+![workflow](images/workflow_actual.png)
 
 ## Results
  1. Combat harmonization shifted the subcortical volume distributions, typically subtly.
@@ -136,6 +147,9 @@ A number of improvements are possible.
  * The entire pipeline could be constructed in Python, if the Python version of neuroCombat supported missing values in the data.
  * The entire pipeline could be constructed in R, though the interactive data exploration would suffer.
  * With some minor modifications, vertex-wise analyses could be run using this code. ComBat harmonization may be better suited to vertex-wise data.
+ * This design, with the Docker container used only to contain the environment, not the data or code, allows the container and code to be reused more easily in different applications. However, for reproducibility, it would also be useful to provide a Docker container that included all of the code, and perhaps the data as well.
+ * The Docker container is very large at about 1.5 GB. This size is due mainly to the R installation, and could likely be optimized.
 
-## Conclusion and acknowledgement
+## Acknowledgements
+Thanks to all of the instructors, teaching assistants, and participants of the Brainhack School 2020! Thanks to the organizers, J.B. Poline, Pierre Belec, Tristan Glatard, and Benjamin de Leener, with particular thanks to Pierre for his patience.
 
