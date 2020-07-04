@@ -75,7 +75,7 @@ Jupyter notebooks are used in this project both for data visualization and for p
 I used [neurodocker 0.7.0](https://github.com/ReproNim/neurodocker) to create the dockerfile that was used to build the container. This was fairly straightforward:
  1. The neurodocker command was built in a bash script (bdf.sh).
  2. Ubuntu was used as the base. Packages to install in the first layer were specified with neurodocker's --pkg-manager and --install options. Only those packages that were necessary to run the pipeline were installed here.
- 3. R configuration was accomplished by instructing neurodocker to include R base packages, and through an additional script, that alled R to install its own packages and manage dependencies. This resulted in a slightly smaller docker image. The script:
+ 3. R configuration was accomplished by instructing neurodocker to include R base packages, and through an additional script, that called R to install its own packages and manage dependencies. This resulted in a slightly smaller docker image. The script:
     * Used apt-get to install Ubuntu packages that are required by R to build the R packages that will be installed: make, gcc, g++, but NOT required to run the pipeline.
     * Ran an R command to download and install the necessary packages.
     * Used apt-get to remove the temporary Ubuntu packages (make, gcc, g++ and packages that were installed to satisfy their dependencies).
@@ -109,12 +109,15 @@ The [Github repository](https://github.com/brainhack-school2020/dnmacdon_ASD_mul
  * The slides used for the final Brainhack School presentation
 
 ### Deliverable 2: Mini-Pipeline to test ComBat Data Harmonization
+The pipeline takes as input a .csv file containing the data: volumes for each subcortical structure for each participant, as well as ASD diagnosis, Age, Sex, Total Brain Volume, Imaging Site, and Quality Control (QC) values describing the quality of each segmentation. Its output consists of two files: a .csv file in which the subcortical volumes and total brain volume have been harmonized using ComBat, and a forest plot showing the effect sizes of diagnosis on subcortical volumes, while controlling for Age, Sex, and Total Brain Volume. The forest plot shows the results of a linear model fit on the harmonized data, a linear model fit on the unharmonized data with Site as a covariate, and a linear mixed-effects model fit on the unharmonized data with Site as a random factor (random intercept).
+
 The pipeline consists of a bash script, which calls several R and Python scripts to harmonize the input data using ComBat, fit linear models to the harmonized and unharmonized data, fit linear mixed effect models with site as a random factor to the unharmonized data, compute effect size measures in all three cases, and display the effect sizes and confidence intervals obtained in a forest plot for comparison. It consists of:
- * harmonize_and_show_effect_sizes.sh: Bash script that manages data flow through the pipeline
- * harmonize_data_prep.py: Python script to load the data, remove rows with missing values, and mask the dependent variables according to quality control (QC) results
- * harmonize.R: R script that takes the masked data and performs ComBat harmonization
- * harmonize_fit_models.py: Python script that fits linear models to both harmonized and unharmonized data, adding site as a covariate to the unharmonized models, and linear mixed effects models on the unharmonized data, with site as a random factor.
- * forest.R: R script that operates on the effect size values computed in the previous step. Saves a forest plot comparing the three methods on each of the dependent variables.
+ 1. harmonize_cmd.sh: Contains the bash command used to start the pipeline. This script is called on startup by the Docker container. All command-line options are specified here.
+ 2. harmonize_and_show_effect_sizes.sh: Bash script that manages data flow through the pipeline
+ 3. harmonize_data_prep.py: Python script to load the data, remove rows with missing values, and mask the dependent variables according to quality control (QC) results
+ 4. harmonize.R: R script that takes the masked data and performs ComBat harmonization
+ 5. harmonize_fit_models.py: Python script that fits linear models to both harmonized and unharmonized data, adding site as a covariate to the unharmonized models, and linear mixed effects models on the unharmonized data, with site as a random factor.
+ 6. forest.R: R script that operates on the effect size values computed in the previous step. Saves a forest plot comparing the three methods on each of the dependent variables.
 
 Note that, although the pipeline is here run non-interactively inside a Docker container, each segment is built in such a way that it can be run independently, and the command line arguments can be specified at runtime.
 
