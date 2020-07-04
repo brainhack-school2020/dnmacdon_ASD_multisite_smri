@@ -4,7 +4,7 @@
 # Ensure required packages are installed 
 packages_to_check <- c("devtools")
 required_packages <- packages_to_check[!(packages_to_check %in% installed.packages()[,"Package"])]
-if(length(required_packages)) install.packages(required_packages)
+if(length(required_packages)) install.packages(required_packages, repos="https://cran.r-project.org")
 if (!("neuroCombat" %in% installed.packages()[,"Package"])) 
 {
 	library(devtools)

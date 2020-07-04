@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import math
-import numpy as np
 from argparse import ArgumentParser
 
 def main():
@@ -31,7 +27,7 @@ def main():
     data = pd.read_csv(cl_args.raw_data, index_col=0)
 
     # Age is missing in some rows, but is needed for modelling. Drop those rows
-    #  NOTE: Ideally we should be controlling this from the command line. ***
+    #  NOTE, TODO: Ideally we should be controlling this from the command line. ***
     complete_rows = data['Age'].notna()
     NA_rows = ~complete_rows
     data = data[complete_rows]
