@@ -2,7 +2,7 @@
 
 import pandas as pd
 from argparse import ArgumentParser
-from statsmodels.formula.api import ols
+import statsmodels.formula.api as smf
 import math
 
 # Function to compute effect sizes
@@ -49,6 +49,7 @@ def main():
     features = harmonized_features.columns[:-5]
 
     # ----------- Model 1: Linear regression on harmonized data -----------
+    print('... fitting linear models on harmonized data.')
     models = pd.Series(dtype='object')
     model_es = []
 
@@ -56,9 +57,9 @@ def main():
 
     for nucleus in features:        # Don't include last (covariate) columns
         formula_string = nucleus + ' ~ ' + X + ' + ' + covar_string
-        models[nucleus] = ols(formula = formula_string, data = harmonized_features).fit()
+        models[nucleus] = smf.ols(formula = formula_string, data = harmonized_features).fit()
         
-        # Get effect size, being sure to drop rows with NA for age.
+        # Compute Cohens d effect sizes.
         n_control = sum(harmonized_features[X] == X_control_level)
         n_ASD = models[nucleus].nobs - n_control
         model_es.append(cohensd(t  = models[nucleus].tvalues[X+'[T.Control]'], 
@@ -74,14 +75,15 @@ def main():
     combat_es.to_csv(combat_es_filename)
 
     # ----------- Model 2: Linear regression on unharmonized data -----------
+    print('... fitting linear models on unharmonized data.')
     models_unh = pd.Series(dtype='object')
     model_unh_es = []
 
     for nucleus in features:
         formula_string = nucleus + ' ~ ' + X + ' + ' + covar_string + ' + ' + site   # Unharmonized: Include site as covariate 
-        models_unh[nucleus] = ols(formula = formula_string, data = unharmonized_data).fit()
+        models_unh[nucleus] = smf.ols(formula = formula_string, data = unharmonized_data).fit()
                 
-        # Get effect size, being sure to drop rows with NA for age.
+        # Compute Cohens d effect sizes.
         n_control = sum(unharmonized_data[X] == X_control_level)
         n_ASD = models_unh[nucleus].nobs - n_control
         model_unh_es.append(cohensd(t  = models_unh[nucleus].tvalues['DX[T.Control]'], 
@@ -97,19 +99,36 @@ def main():
     unh_es.to_csv(unh_es_filename)
 
     # ----------- Model 3: Linear mixed models on unharmonized data -----------
+    print('... fitting linear mixed models.')
+    lm_models = pd.Series(dtype='object')
+    lm_model_es = []
+
+    for nucleus in features:
+        formula_string = nucleus + ' ~ ' + X + ' + ' + covar_string + ' + ' + site   
+        lm_models[nucleus] = smf.mixedlm(formula_string,
+                                         unharmonized_data, 
+                                         groups = unharmonized_data["Site"], 
+                                         missing='drop').fit()
+                    
+        # Compute Cohens d effect sizes.
+        n_control = sum(unharmonized_data[X] == X_control_level)
+        n_ASD = lm_models[nucleus].nobs - n_control
+        lm_model_es.append(cohensd(t  = lm_models[nucleus].tvalues['DX[T.Control]'], 
+                                   df = lm_models[nucleus].df_resid, 
+                                   n1 = n_control,
+                                   n2 = n_ASD))
+        
+    lmm_es = pd.DataFrame(lm_model_es, index=features)
+    lmm_es_filename = "int_es_lmm.csv"
+    es_filenames.append(lmm_es_filename)
+    es_names.append("Mixed_model")
+    lmm_es.to_csv(lmm_es_filename)
+
+    # -------------------- Model fitting complete, write out data -------------
     
-
-
-
-
-
-
-
-
     # Write out files containing output file names and type of data
     pd.DataFrame(es_filenames).to_csv("es_filenames.csv", index=False, header=False)
     pd.DataFrame(es_names).to_csv("es_names.csv", index=False, header=False)
-
 
     print('... Model fitting and effect size calculations complete')
 
