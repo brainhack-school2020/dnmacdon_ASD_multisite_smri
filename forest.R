@@ -9,6 +9,8 @@ library(forestplot)
 
 main <- function()
 {
+	cat("Generating forest plot...\n")
+	
 	# To do: add command line parsing, so we don't need to hard-code filenames, structure names, etc.
 	# Parse command line arguments
 
@@ -57,6 +59,8 @@ main <- function()
 		   xlab="Cohen's d ASD vs. HC",
 		   title="Effect Size Measures of ASD Diagnosis on Subcortical Volume")
 	dev.off()
+
+	cat(paste("... forest plot complete, saved in", 'forest_plot.png', '\n'))
 }
 
 main()

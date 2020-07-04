@@ -15,11 +15,14 @@ library(neuroCombat)
 
 main <- function()
 {
-	# Parse the command line arguments (should only be an input file name and an output file)
+	cat("Harmonizing data using ComBat...\n")
+
+	# Parse the command line arguments 
 	args <- commandArgs(trailingOnly = TRUE)
 	
-	# Arguments should be input file, output file, filename of features to harmonize, site feature, covariates. Minimum of 4.
-	if (length(args) < 4)
+	# Arguments should be input file, output file, filename of features to harmonize, site feature, regressor, ComBat covariates,
+	# model covariates. Minimum of 5.
+	if (length(args) < 5)
 	{
 		cat("ERROR: MUST HAVE AT LEAST FOUR COMMAND LINE ARGUMENTS: input file, output file,\n")
 		cat("  filename of list of features to harmonize, name of the site/batch feature, then optional covariates.\n")
@@ -30,10 +33,13 @@ main <- function()
 		output_file <- args[2]
 		file_features_to_harmonize <- args[3]
 		site_feature <- args[4]
-		covars <- c()
-		if (length(args) > 4) covars <- args[-(1:4)] # Covariates are in all of the arguments after the fourth.
+		X <- args[5] # Independant variable.
+		if (length(args) > 5) covars <- strsplit(gsub(" ","",args[6]),",")[[1]]
+		if (length(args) > 6) mod_covars <- strsplit(gsub(" ","",args[7]),",")[[1]]
 	}
-	cat(paste("Using", input_file, "as input, and", output_file, "as output file.\n"))
+	cat(paste("... using", input_file, "as input, and", output_file, "as output file.\n"))
+	cat(paste("... using ComBat covariate", covars, "\n"))
+	cat(paste("... site information is in", site_feature, "\n"))
 
 	# Read in data
 	features_to_harmonize <- readLines(file_features_to_harmonize) # readLines() gives us a vector of strings
@@ -68,10 +74,15 @@ main <- function()
 	if ( ncol(harmonized$dat.combat) != nrow(input) ) 
 		cat("WARNING: output has different number of rows as input. May be due to blank or constant rows in input.\n")
 
-	# Combine the harmonized data with the site data and covariates
+	# Combine the harmonized data with the site data, covariates, IV 
 	output <- cbind(t(harmonized$dat.combat), input[covars])
 	output <- cbind(output, input[site_feature])
+	output <- cbind(output, input[X])
 	
+	# Check for model covariates that are not already included
+	other_covars <- mod_covars[ !(mod_covars %in% covars) ]
+	output <- cbind(output, input[other_covars])
+
 	# Output harmonized data
 	cat(paste("Writing output to", output_file,"\n"))
 	write.csv(output, output_file, row.names=TRUE, na="")

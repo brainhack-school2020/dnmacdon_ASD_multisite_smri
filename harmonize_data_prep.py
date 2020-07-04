@@ -15,10 +15,11 @@ def main():
     parser.add_argument("qc_threshold", action = "store", 
                         help = "Maximum value for failed QC, features with this value and below for QC will be masked.")
     parser.add_argument("output_file", action="store", help = "Name of file to to output the masked values.")
+    parser.add_argument("feature_file", action="store", help = "Name of file to which feature column names will be written.")
     cl_args = parser.parse_args()
 
     # Extract mask columns and threshold from input arguments
-    qc_mask  = cl_args.qc_mask.split(', ')
+    qc_mask  = cl_args.qc_mask.split(',')
     qc_threshold = float(cl_args.qc_threshold)
 
     print("... masking based on", qc_mask)
@@ -44,6 +45,9 @@ def main():
 
     # Write out data with failed structures masked
     data.to_csv(cl_args.output_file)
+
+    # Write out feature names for later steps in the pipeline
+    pd.DataFrame(features).to_csv(cl_args.feature_file, index=False, header=False, sep='\n')
 
     print('... Masking complete')
 
