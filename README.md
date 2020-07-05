@@ -50,6 +50,15 @@ This project made use of subcortical volumes, previously derived from a subset (
 ### Workflow
 The workflow encapsulated in the pipeline and jupyter notebooks are described in the figure below.
 ![workflow](images/workflow_actual.png)
+T1w structural MRI scans from several sites in the ABIDE dataset were preprocessed, then segmented using the [MAGeTBrain](https://github.com/CobraLab/MAGeTbrain) segmentation pipeline, which provided volumes for left and right striatum, thalamus, and globus pallidus. The pipeline developed here then masked out volumes for structures that did not pass quality control checks (QC). This data was examined using interactive visualizations in Python and Jupyter notebooks. The same masked data was processed in three streams by the pipeline. In all three cases, linear models were used to quantify the effect of an autism spectrum disorder diagnosis on the volumes of the subcortical structures listed above. Age, sex, and total brain volume were used as covariates.
+
+In the first stream, linear models were fit, as shown in the figure, to the unharmonized data, with imaging site added as a covariate. In the second, linear mixed effects models were fit, with site as a random effect (random intercept). In the third, the raw volumes were harmonized using ComBat, and linear models were fit to this harmonized data. The harmonization included age and sex as covariates, to preserve variation due to those factors. Because ComBat was expected to remove site-specific effects, site was not included as a covariate in these models.
+
+Cohen's _d_ effect sizes were computed from the linear models in all three streams. These were used to generate a forest plot, to allow comparison between the three methods.
+
+Note that the Jupyter notebooks also support the examination of the harmonized data.
+
+Data harmonization and effect size visualization were done in R, where the available tools were more sophisticated.
 
 ### Pipeline: Python vs. R
 Initially, the project was meant to run entirely in Python. However, two challenges arose. First, the current Python version of neuroCombat is not able to accept data with missing values. Since this data is masked based on segmentation quality (structures whose segementation failed are not used), the data would contain missing values. The R version of neuroCombat does support missing values. Also, R has much more sophisticated packages available to generate forest plots, which are used here to compare the results of the different harmonization methods. Since the language of the Brainhack School is Python, the project was reconceived as a mini-pipeline, using both R and Python.
@@ -78,6 +87,7 @@ The docker container was configured to run the pipeline bash script at startup i
 * Docker for containerization
  
 ## Deliverables
+Note that the deliverables changes somewhat over the course of the project, and are more extensive than the original conception.
 ### Deliverable 1: Github Repository
 The [Github repository](https://github.com/brainhack-school2020/dnmacdon_ASD_multisite_smri) contains:
  * Data, generated from the [ABIDE](http://fcon_1000.projects.nitrc.org/indi/abide/) dataset as described above.
