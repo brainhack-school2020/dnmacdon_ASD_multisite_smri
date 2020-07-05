@@ -8,8 +8,8 @@ dependencies:
   - backcall=0.1.0=py37_0
   - blas=1.0=mkl
   - bleach=3.1.4=py_0
-  - ca-certificates=2020.1.1=0
-  - certifi=2020.4.5.1=py37_0
+  - ca-certificates=2020.6.24=0
+  - certifi=2020.6.20=py37_0
   - cycler=0.10.0=py37_0
   - dbus=1.13.14=hb2f20db_0
   - decorator=4.4.2=py_0
@@ -28,6 +28,7 @@ dependencies:
   - ipykernel=5.1.4=py37h39e3cac_0
   - ipython=7.13.0=py37h5ca1d4c_0
   - ipython_genutils=0.2.0=py37_0
+  - ipywidgets=7.5.1=py_0
   - jedi=0.17.0=py37_0
   - jinja2=2.11.2=py_0
   - jpeg=9b=h024ee3a_2
@@ -101,6 +102,7 @@ dependencies:
   - wcwidth=0.1.9=py_0
   - webencodings=0.5.1=py37_1
   - wheel=0.34.2=py37_0
+  - widgetsnbextension=3.5.1=py37_0
   - xz=5.2.5=h7b6447c_0
   - zeromq=4.3.1=he6710b0_3
   - zipp=3.1.0=py_0
@@ -108,4 +110,3 @@ dependencies:
   - pip:
     - neurocombat==0.2.5
 prefix: /home/dnm/apps/miniconda3/envs/harmonization
-
