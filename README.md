@@ -72,6 +72,10 @@ This project made use of subcortical volumes, previously derived from a subset (
     * Final presentation slides
 
 ## Progress overview
+### Workflow
+The workflow encapsulated in the pipeline and jupyter notebooks are described in the figure below.
+![workflow](images/workflow_actual.png)
+
 ### Pipeline: Python vs. R
 Initially, the project was meant to run entirely in Python. However, two challenges arose. First, the current Python version of neuroCombat is not able to accept data with missing values. Since this data is masked based on segmentation quality (structures whose segementation failed are not used), the data would contain missing values. The R version of neuroCombat does support missing values. Also, R has much more sophisticated packages available to generate forest plots, which are used here to compare the results of the different harmonization methods. Since the language of the Brainhack School is Python, the project was reconceived as a mini-pipeline, using both R and Python.
 
@@ -90,15 +94,11 @@ I used [neurodocker 0.7.0](https://github.com/ReproNim/neurodocker) to create th
 
 The docker container was configured to run the pipeline bash script at startup in non-interactive mode. Input and output directories are set on the command line. All code that is run in the Docker container is provided on the command line (i.e. it has not been built in to the container). This is to allow for modifications, for example to use it on a different dataset, while maintaining the same environment. That said, most options are specified on the command line, so it may not be necessary to modify the code.
 
-### Workflow
-The workflow encapsulated in the pipeline and jupyter notebooks are described in the figure below.
-![workflow](images/workflow_actual.png)
-
 ## Results
  1. Combat harmonization shifted the subcortical volume distributions, typically subtly.
  2. The effects of ASD diagnosis on subcortical volumes were generally non-significant using all three measures.
  3. Cohen's _d_ effect sizes and confidence intervals were similar across all three methods.
- 4. Measures of the effect of ASD diagnosis on subcortical volumes were generally non-significant using all three measures.
+![Forest Plot](output/forest-plot.png)
 
 ### Tools Learned
 * git and github
