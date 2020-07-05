@@ -9,15 +9,15 @@ This project involves using [ComBat](https://github.com/jfortin1/ComBatHarmoniza
 
 ## Project definition 
 ### Background
-I am a Master's student in the [CoBrA Lab](http://cobralab.ca) at McGill University, located at the Douglas Mental Health University Institute, where I study autism and brain anatomy, using structural MRI (sMRI). I have been working with a large, multi-site dataset to examine subcortical anatomy in autism. Multi-site MRI datasets can be difficult to work with, as scans are typically acquired on different equipment, using different protocols, by different operators. In addition, different sites may be sampling different populations. This can result in a dataset in which a significant portion of the variance is due to non-biological factors. Up to now, I have been using meta-analytic techniques to combine the data from the different sites. 
+I have been working with a large, multi-site dataset to examine subcortical anatomy in autism. Multi-site MRI datasets can be difficult to work with, as scans are typically acquired on different equipment, using different protocols, by different operators. In addition, different sites may be sampling different populations. This can result in a dataset in which a significant portion of the variance is due to non-biological factors. Up to now, I have been using meta-analytic techniques to combine the data from the different sites. 
 
-With this project, I would like to learn and apply two other techniques for inter-site data harmonization:
- * Use the open source ComBat library, which was originally intended to mitigate batch effects in genetic studies, but has since been adapted to work with neuroimaging data.
- * Use linear mixed-effect models. 
+The purpose of this project is to learn and apply two other techniques for inter-site data harmonization:
+ * the open source [ComBat](https://github.com/Jfortin1/ComBatHarmonization) library, which was originally intended to mitigate batch effects in genetic studies, but has since been adapted to work with neuroimaging data.
+ * linear mixed-effect models. 
 
-I would also like to:
- * Use the tools we have been learning about to make my project more transparent, easy to maintain, reproducible, and open to collaboration.
- * If time permits, find a way to compare these three site harmonization techniques systematically.
+Other goals are to: 
+ * Use the tools we have been introduced to in the BrainHack School to make this project more transparent, easy to maintain, reproducible, and open to collaboration.
+ * To compare these techniques.
 
 ### Tools Learned 
 Tools learned and used during this project include:
