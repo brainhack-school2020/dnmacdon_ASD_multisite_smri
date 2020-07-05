@@ -1,6 +1,7 @@
 #!/bin/bash
-./harmonize_and_show_effect_sizes.sh -i input/data.csv \
-				     -o output \
+cd /input
+./harmonize_and_show_effect_sizes.sh -i /input/data.csv \
+				     -o /output \
 				     -s Site \
 				     -x DX \
 				     -c Age,Sex,TBV \

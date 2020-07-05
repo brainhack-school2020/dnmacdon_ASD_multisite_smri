@@ -99,6 +99,7 @@ The [Github repository](https://github.com/brainhack-school2020/dnmacdon_ASD_mul
  * The slides used for the final Brainhack School presentation
 
 The structure of the repository is shown below:
+
 ![Repository Structure](images/RepoTree.png)
 
 ### Deliverable 2: Mini-Pipeline to test ComBat Data Harmonization
@@ -121,8 +122,11 @@ Jupyter notebooks were written to facilitate interactive data exploration. Sever
 The conda environment file harmonization.yml is included in the repository, allowing the Python environment used in this project to be recreated. Note that the R environment was not virtualized in the same way, necessitating the use of Docker.
 
 ### Deliverable 5: Containerization with Docker
-The pipeline uses both Python and R. While virtualizing Python environments is readily done with conda, it is more difficult to do so with R. For this reason, the entire environment was constructed in a Docker container in which the pipeline runs. See above for more details.
- 
+The pipeline uses both Python and R. While virtualizing Python environments is readily done with conda, it is more difficult to do so with R. For this reason, the entire environment was constructed in a Docker container in which the pipeline runs. See above for more details. The docker folder in the repository contains:
+ * bdf.sh: contains the shell command used to build the dockerfile using neurodocker
+ * R_config.sh: contains a script called during dockerfile construction, to configure R
+ * Dockerfile: the specification file for the Docker container, build using the scripts above.
+
 ## Results
  1. Combat harmonization shifted the subcortical volume distributions, typically subtly.
  2. The effects of ASD diagnosis on subcortical volumes were generally non-significant using all three measures.
@@ -162,6 +166,7 @@ A number of improvements are possible.
  * With some minor modifications, vertex-wise analyses could be run using this code. ComBat harmonization may be better suited to vertex-wise data.
  * This design, with the Docker container used only to contain the environment, not the data or code, allows the container and code to be reused more easily in different applications. However, for reproducibility, it would also be useful to provide a Docker container that included all of the code, and perhaps the data as well.
  * The Docker container is very large at about 1.5 GB. This size is due mainly to the R installation, and could likely be optimized.
+ * The pipeline code exists in both code/pipeline and input directories. Ideally symbolic links would be used, however Docker does not follow links (perhaps for security reasons) and GitHub stores the contents of the links. It may be worthwhile to reorganize the repository to eliminate the duplicated code.
 
 ## Acknowledgements
 Thanks to all of the instructors, teaching assistants, and participants of the Brainhack School 2020! Thanks to the organizers, J.B. Poline, Pierre Belec, Tristan Glatard, and Benjamin de Leener, with particular thanks to Pierre for his patience.

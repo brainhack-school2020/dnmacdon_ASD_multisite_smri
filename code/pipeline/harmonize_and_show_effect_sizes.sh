@@ -99,12 +99,12 @@ INT_EFFECT_SIZES=int_es.csv
 INT_ES_NAMES=int_es_names.csv
 FP_NAME="forest-plot.png"
 # Generate tmp directory dynamically to prevent data loss.
-TMP_DIR="$(mktemp -d -p .)"
+TMP_DIR="$(mktemp -d -p $OUTDIR)"
 
 if [[ ! -d $OUTDIR ]]; then 
 	mkdir $OUTDIR 
 fi
-
+echo $TMP_DIR
 if [[ ! -d $TMP_DIR ]]; then
 	echo "Error creating temporary directory. Exiting."
 	exit 1
