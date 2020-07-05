@@ -151,6 +151,7 @@ Note that this container does NOT contain the data or code. When you run it (see
 ![Forest Plot](output/forest-plot.png)
 
 ## Instructions
+### Pipeline Instructions
 To run the code yourself, you will need to have Docker and conda installed on your system. To run the pipeline:
 1. Download this repository.
 2. Run the containerized pipeline:
@@ -171,6 +172,7 @@ docker run --rm -v path_to_repository/input/:/input/:ro -v path_to_repository/ou
 				     -q "L_str,L_thal,L_GP,R_str,R_GP,R_thal" \
 				     -z "Age,Sex" \
 				     -t 0.5
+
 where the options are:
 | Argument | Meaning |
 | -------- | ------- |
@@ -186,6 +188,7 @@ where the options are:
 
 The dependent variables must be named the same as the QC variables, with the suffix _vol. For example, L_str and L_str_vol. They are not specified on the command line.
 
+### Instructions: Building Docker Container
 If you wish to build the Docker container that was built in this project:
 1. From the docker directory, create the Dockerfile that contains the specifications for the container:
 ``` ./bdf.sh ```
@@ -193,7 +196,8 @@ If you wish to build the Docker container that was built in this project:
 ``` docker build -t harmonizer . ```
 Please be aware that building the container will use current versions of the software and libraries, which may affect results. Building the container should not be necessary to reproduce the results reported here. Only rebuild the container if you wish to make changes to the pipeline.
 
-If you wish to run the Jupyter notebook for data exploration:
+### Instructions: Jupyter Notebooks
+If you wish to run the Jupyter notebook for data exploration and presentation:
 1. If you are using your own data, you must first run the pipeline. This will create a file of harmonized data that the notebooks need to run. If you wish to use the data provided, you do not need to run the pipeline first. The pipeline has already been run and the results are in the output directory.
 2. Load the conda environment in which the notebook will run. From the repository's root directory, run: ``` conda env create -f harmonization.yml && conda activate harmonization```
 3. From the same directory, open the directory in jupyter and select the notebook you wish to open. They are in code/notebooks: ``` jupyter notebook ```
