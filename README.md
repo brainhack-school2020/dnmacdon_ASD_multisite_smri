@@ -23,7 +23,7 @@ I would also like to:
 Tools learned and used during this project include:
  * git and github for version control, code sharing, project management, and collaboration
  * Bash scripting
- * Jupyter notebooks
+ * Jupyter notebook
  * Conda for virtualization, to improve reproducibility
  * Python libraries for data manipulation (pandas), visualization (matplotlib, Seaborn) and analysis (numpy, statsmodels)
  * Interactive figures in Python using ipywidgets
@@ -48,15 +48,15 @@ This project made use of subcortical volumes, previously derived from a subset (
 
 ## Progress overview
 ### Workflow
-The workflow encapsulated in the pipeline and jupyter notebooks are described in the figure below.
+The workflow encapsulated in the pipeline and jupyter notebook are described in the figure below.
 ![workflow](images/workflow_actual.png)
-T1w structural MRI scans from several sites in the ABIDE dataset were preprocessed, then segmented using the [MAGeTBrain](https://github.com/CobraLab/MAGeTbrain) segmentation pipeline, which provided volumes for left and right striatum, thalamus, and globus pallidus. The pipeline developed here then masked out volumes for structures that did not pass quality control checks (QC). This data was examined using interactive visualizations in Python and Jupyter notebooks. The same masked data was processed in three streams by the pipeline. In all three cases, linear models were used to quantify the effect of an autism spectrum disorder diagnosis on the volumes of the subcortical structures listed above. Age, sex, and total brain volume were used as covariates.
+T1w structural MRI scans from several sites in the ABIDE dataset were preprocessed, then segmented using the [MAGeTBrain](https://github.com/CobraLab/MAGeTbrain) segmentation pipeline, which provided volumes for left and right striatum, thalamus, and globus pallidus. The pipeline developed here then masked out volumes for structures that did not pass quality control checks (QC). This data was examined using interactive visualizations in Python and Jupyter notebook. The same masked data was processed in three streams by the pipeline. In all three cases, linear models were used to quantify the effect of an autism spectrum disorder diagnosis on the volumes of the subcortical structures listed above. Age, sex, and total brain volume were used as covariates.
 
 In the first stream, linear models were fit, as shown in the figure, to the unharmonized data, with imaging site added as a covariate. In the second, linear mixed effects models were fit, with site as a random effect (random intercept). In the third, the raw volumes were harmonized using ComBat, and linear models were fit to this harmonized data. The harmonization included age and sex as covariates, to preserve variation due to those factors. Because ComBat was expected to remove site-specific effects, site was not included as a covariate in these models.
 
 Cohen's _d_ effect sizes were computed from the linear models in all three streams. These were used to generate a forest plot, to allow comparison between the three methods.
 
-Note that the Jupyter notebooks also support the examination of the harmonized data.
+Note that the Jupyter notebook also supports the examination of the harmonized data.
 
 Data harmonization and effect size visualization were done in R, where the available tools were more sophisticated.
 
@@ -64,7 +64,7 @@ Data harmonization and effect size visualization were done in R, where the avail
 Initially, the project was meant to run entirely in Python. However, two challenges arose. First, the current Python version of neuroCombat is not able to accept data with missing values. Since this data is masked based on segmentation quality (structures whose segementation failed are not used), the data would contain missing values. The R version of neuroCombat does support missing values. Also, R has much more sophisticated packages available to generate forest plots, which are used here to compare the results of the different harmonization methods. Since the language of the Brainhack School is Python, the project was reconceived as a mini-pipeline, using both R and Python.
 
 ### Jupyter Notebooks
-Jupyter notebooks are used in this project both for data visualization and for presentation (using RISE). Initially, data harmonization was done in Python, and all of the code ran inside of Jupyter notebooks. When QC masking was added, it was necessary to move the ComBat harmonization code to R. For this reason, the Jupyter Notebooks depend on having access to the harmonized data from the pipeline. Several interactive visualizations are provided in the Jupyter notebooks, and conda environments are provided to allow them to be run on other machines without version conflicts.
+Jupyter notebooks are used in this project both for data visualization and for presentation (using RISE). Initially, data harmonization was done in Python, and all of the code was run inside of Jupyter notebooks. When QC masking was added, it was necessary to move the ComBat harmonization code to R. For this reason, the Jupyter Notebooks depend on having access to the harmonized data from the pipeline. Several interactive visualizations are provided in the Jupyter notebooks, and conda environments are provided to allow them to be run on other machines without version conflicts.
 
 ### Docker Container
 I used [neurodocker 0.7.0](https://github.com/ReproNim/neurodocker) to create the dockerfile that was used to build the container. This was fairly straightforward:
@@ -85,7 +85,7 @@ The [Github repository](https://github.com/brainhack-school2020/dnmacdon_ASD_mul
  * Data, generated from the [ABIDE](http://fcon_1000.projects.nitrc.org/indi/abide/) dataset as described above.
  * Code for the analysis "pipeline" using R and Python
  * Code used to generate the docker container in which the pipeline runs
- * Jupyter notebooks for interactive data visualization
+ * Jupyter notebook for interactive data visualization
  * This README.md file describing the project
  * Examples of visualizations created using the pipeline and notebooks
  * The slides used for the final Brainhack School presentation
@@ -124,7 +124,7 @@ The pipeline uses both Python and R. While virtualizing Python environments is r
 
 ![Age Distribution 1](images/age_dist1.png) ![Age Distribution 2](images/age_dist2.png)
 
- 2. Combat harmonization shifted the subcortical volume distributions, typically subtly. The figure below shows one example, for the left globus pallidus. Harmonized volumes are in brown, unharmonized in blue.
+ 2. Combat harmonization shifted the subcortical volume distributions, typically subtly. The large panel below shows one example, for the left globus pallidus. Harmonized volumes are in brown, unharmonized in blue. The smaller panels show, for the same structure, the distributions of volume with age and total brain volume, both before and after harmonization. These are biological sources of variability that we want to preserve.
 
 ![Harmonization](images/harm_dist_LGP.png)
 
@@ -151,10 +151,10 @@ If you wish to build the Docker container that was built in this project:
 ``` docker build -t harmonizer . ```
 Please be aware that building the container will use current versions of the software and libraries, which may affect results. Building the container should not be necessary to reproduce the results reported here. Only rebuild the container if you wish to make changes to the pipeline.
 
-If you wish to run the Jupyter notebooks for data exploration:
-1. First, run the pipeline. This will create a file of harmonized data that the notebooks need to run.
-2. Load the conda environment in which the notebooks will run. From the repository's root directory, run: ``` conda env create -f harmonization.yml ```
-3. From the same directory, open the directory in jupyter and select the notebook you wish to open: ``` jupyter notebook ```
+If you wish to run the Jupyter notebook for data exploration:
+1. If you are using your own data, you must first run the pipeline. This will create a file of harmonized data that the notebooks need to run. If you wish to use the data provided, you do not need to run the pipeline first. The pipeline has already been run and the results are in the output directory.
+2. Load the conda environment in which the notebook will run. From the repository's root directory, run: ``` conda env create -f harmonization.yml ```
+3. From the same directory, open the directory in jupyter and select the notebook you wish to open. They are in code/notebooks: ``` jupyter notebook ```
 4. Specify the name and location of the input files, if different from the names and locations already in the notebook.
 5. Run all cells.
 
