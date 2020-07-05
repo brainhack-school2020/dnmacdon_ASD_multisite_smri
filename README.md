@@ -96,6 +96,7 @@ The structure of the repository is shown below:
 ![Repository Structure](images/RepoTree.png)
 
 | File/Directory    | Content |
+| ----------------- | ------- |
 | code              | Jupyter notebooks and pipeline code |
 | docker            | Contains scripts used to create docker container |
 | images            | Images used in this README.md |
