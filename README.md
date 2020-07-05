@@ -100,7 +100,7 @@ The structure of the repository is shown below:
 | code              | Jupyter notebooks and pipeline code |
 | docker            | Contains scripts used to create docker container |
 | images            | Images used in this README.md |
-| input             | Default input directory for the pipeline |
+| input             | Default input directory for the pipeline. Includes input data and copy of pipeline code. |
 | output            | Default output directory for the pipeline |
 | Week_3_Deliverables_Data_Visualization | Deliverables for Week 3 of Brainhack School |
 | harmonization.yml | conda environment description for the pipeline and the Jupyter notebooks |
@@ -130,6 +130,9 @@ The pipeline uses both Python and R. While virtualizing Python environments is r
  * bdf.sh: contains the shell command used to build the dockerfile using neurodocker
  * R_config.sh: contains a script called during dockerfile construction, to configure R
  * Dockerfile: the specification file for the Docker container, build using the scripts above.
+The Docker container is available on DockerHub at dnmacdon/harmonizer:environment_only
+
+Note that this container does NOT contain the data or code. When you run it (see below), you will need to specify the input and output directories, and the input directory must contain the pipeline code and the data. This was done to allow for greater flexibility, to make it easier to use the pipeline with other data or to modify it. For maximum reproducibility, it would make sense to produce a Docker container that incorporates the pipeline code as well.
 
 ## Results
  1. Differences between sites included different age distributions, meaning that different sites were sampling different populations. This indicates that there is biological variability between sites that should be preserved. Below are two views on the age distributions.
@@ -165,7 +168,7 @@ Please be aware that building the container will use current versions of the sof
 
 If you wish to run the Jupyter notebook for data exploration:
 1. If you are using your own data, you must first run the pipeline. This will create a file of harmonized data that the notebooks need to run. If you wish to use the data provided, you do not need to run the pipeline first. The pipeline has already been run and the results are in the output directory.
-2. Load the conda environment in which the notebook will run. From the repository's root directory, run: ``` conda env create -f harmonization.yml ```
+2. Load the conda environment in which the notebook will run. From the repository's root directory, run: ``` conda env create -f harmonization.yml && conda activate harmonization```
 3. From the same directory, open the directory in jupyter and select the notebook you wish to open. They are in code/notebooks: ``` jupyter notebook ```
 4. Specify the name and location of the input files, if different from the names and locations already in the notebook.
 5. Run all cells.
@@ -174,7 +177,6 @@ If you wish to run the Jupyter notebook for data exploration:
 A number of improvements are possible.
  * Using a library such as rpy2 to call R from within Python would eliminate the need for the bash scripting, the complex command-line arguments, and the use of temporary files, which would reduce the apparent complexity of the process.
  * The entire pipeline could be constructed in Python, if the Python version of neuroCombat supported missing values in the data.
- * The entire pipeline could be constructed in R, though the interactive data exploration would suffer.
  * With some minor modifications, vertex-wise analyses could be run using this code. ComBat harmonization may be better suited to vertex-wise data.
  * This design, with the Docker container used only to contain the environment, not the data or code, allows the container and code to be reused more easily in different applications. However, for reproducibility, it would also be useful to provide a Docker container that included all of the code, and perhaps the data as well.
  * The Docker container is very large at about 1.5 GB. This size is due mainly to the R installation, and could likely be optimized.
