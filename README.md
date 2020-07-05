@@ -179,6 +179,7 @@ A number of improvements are possible.
  * The entire pipeline could be constructed in Python, if the Python version of neuroCombat supported missing values in the data.
  * With some minor modifications, vertex-wise analyses could be run using this code. ComBat harmonization may be better suited to vertex-wise data.
  * This design, with the Docker container used only to contain the environment, not the data or code, allows the container and code to be reused more easily in different applications. However, for reproducibility, it would also be useful to provide a Docker container that included all of the code, and perhaps the data as well.
+ * As configured, the linear mixed effects models do not converge with some optimization routines and some subsets of data. It is important to troubleshoot this, as it may indicate a problem in the model specification.
  * The Docker container is very large at about 1.5 GB. This size is due mainly to the R installation, and could likely be optimized.
  * The pipeline code exists in both code/pipeline and input directories. Ideally symbolic links would be used, however Docker does not follow links (perhaps for security reasons) and GitHub stores the contents of the links. It may be worthwhile to reorganize the repository to eliminate the duplicated code.
 
