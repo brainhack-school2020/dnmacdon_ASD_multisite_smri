@@ -7,31 +7,6 @@ David MacDonald
 ## Summary 
 This project involves using [ComBat](https://github.com/jfortin1/ComBatHarmonization), an open-source library for multi-site data harmonization, to remove site effects from subcortical volumetric data derived from a subset of the [ABIDE](http://fcon_1000.projects.nitrc.org/indi/abide/) dataset, and to compare this method to using linear models and mixed effects models without harmonization. 
 
-## Instructions
-The sections below provide an introduction to the purpose and structure of the project. To run it yourself, you will need to have Docker and conda installed on your system. To run the pipeline:
-1. Download this repository.
-2. Run the containerized pipeline:
-   1. Change to the input directory. This contains both the data and the pipeline code: ```cd input```
-   2. Run the pipeline. You must specify where the input and output directories are. You will most likely be running the Docker container downloaded from DockerHub, however you must specify the input directory that contains the code and data. In this repository, that is the "input" folder.
-```
-docker run --rm -v path_to_repository/input/:/input/:ro -v path_to_repository/output/:/output/ dnmacdon/harmonizer:environment_only
-```
-   3. The output will be in the output directory that you specified, and will consist of a .csv file of harmonized data and a forest plot showing the comparison between three modelling methods: linear models on harmonized data, linear models on unharmonized data, and linear mixed effects models on unharmonized data. The forest plot shows the Cohen's _d_ effect size of ASD diagnosis on the volume of each of six subcortical structures, controlling for Age, Sex, and Total Brain Volume.
-
-If you wish to build the Docker container that was built in this project:
-1. From the docker directory, create the Dockerfile that contains the specifications for the container:
-``` ./bdf.sh ```
-2. Build the container:
-``` docker build -t harmonizer . ```
-Please be aware that building the container will use current versions of the software and libraries, which may affect results. Building the container should not be necessary to reproduce the results reported here. Only rebuild the container if you wish to make changes to the pipeline.
-
-If you wish to run the Jupyter notebooks for data exploration:
-1. First, run the pipeline. This will create a file of harmonized data that the notebooks need to run.
-2. Load the conda environment in which the notebooks will run. From the repository's root directory, run: ``` conda env create -f harmonization.yml ```
-3. From the same directory, open the directory in jupyter and select the notebook you wish to open: ``` jupyter notebook ```
-4. Specify the name and location of the input files, if different from the names and locations already in the notebook.
-5. Run all cells.
-
 ## Project definition 
 ### Background
 I am a Master's student in the [CoBrA Lab](http://cobralab.ca) at McGill University, located at the Douglas Mental Health University Institute, where I study autism and brain anatomy, using structural MRI (sMRI). I have been working with a large, multi-site dataset to examine subcortical anatomy in autism. Multi-site MRI datasets can be difficult to work with, as scans are typically acquired on different equipment, using different protocols, by different operators. In addition, different sites may be sampling different populations. This can result in a dataset in which a significant portion of the variance is due to non-biological factors. Up to now, I have been using meta-analytic techniques to combine the data from the different sites. 
@@ -94,12 +69,6 @@ I used [neurodocker 0.7.0](https://github.com/ReproNim/neurodocker) to create th
 
 The docker container was configured to run the pipeline bash script at startup in non-interactive mode. Input and output directories are set on the command line. All code that is run in the Docker container is provided on the command line (i.e. it has not been built in to the container). This is to allow for modifications, for example to use it on a different dataset, while maintaining the same environment. That said, most options are specified on the command line, so it may not be necessary to modify the code.
 
-## Results
- 1. Combat harmonization shifted the subcortical volume distributions, typically subtly.
- 2. The effects of ASD diagnosis on subcortical volumes were generally non-significant using all three measures.
- 3. Cohen's _d_ effect sizes and confidence intervals were similar across all three methods.
-![Forest Plot](output/forest-plot.png)
-
 ### Tools Learned
 * git and github
 * Statistical analysis using python, particularly linear mixed effect models
@@ -141,6 +110,37 @@ The conda environment file harmonization.yml is included in the repository, allo
 ### Deliverable 5: Containerization with Docker
 The pipeline uses both Python and R. While virtualizing Python environments is readily done with conda, it is more difficult to do so with R. For this reason, the entire environment was constructed in a Docker container in which the pipeline runs. See above for more details.
  
+## Results
+ 1. Combat harmonization shifted the subcortical volume distributions, typically subtly.
+ 2. The effects of ASD diagnosis on subcortical volumes were generally non-significant using all three measures.
+ 3. Cohen's _d_ effect sizes and confidence intervals were similar across all three methods.
+![Forest Plot](output/forest-plot.png)
+
+## Instructions
+To run the code yourself, you will need to have Docker and conda installed on your system. To run the pipeline:
+1. Download this repository.
+2. Run the containerized pipeline:
+   1. Change to the input directory. This contains both the data and the pipeline code: ```cd input```
+   2. Run the pipeline. You must specify where the input and output directories are. You will most likely be running the Docker container downloaded from DockerHub, however you must specify the input directory that contains the code and data. In this repository, that is the "input" folder.
+```
+docker run --rm -v path_to_repository/input/:/input/:ro -v path_to_repository/output/:/output/ dnmacdon/harmonizer:environment_only
+```
+   3. The output will be in the output directory that you specified, and will consist of a .csv file of harmonized data and a forest plot showing the comparison between three modelling methods: linear models on harmonized data, linear models on unharmonized data, and linear mixed effects models on unharmonized data. The forest plot shows the Cohen's _d_ effect size of ASD diagnosis on the volume of each of six subcortical structures, controlling for Age, Sex, and Total Brain Volume.
+
+If you wish to build the Docker container that was built in this project:
+1. From the docker directory, create the Dockerfile that contains the specifications for the container:
+``` ./bdf.sh ```
+2. Build the container:
+``` docker build -t harmonizer . ```
+Please be aware that building the container will use current versions of the software and libraries, which may affect results. Building the container should not be necessary to reproduce the results reported here. Only rebuild the container if you wish to make changes to the pipeline.
+
+If you wish to run the Jupyter notebooks for data exploration:
+1. First, run the pipeline. This will create a file of harmonized data that the notebooks need to run.
+2. Load the conda environment in which the notebooks will run. From the repository's root directory, run: ``` conda env create -f harmonization.yml ```
+3. From the same directory, open the directory in jupyter and select the notebook you wish to open: ``` jupyter notebook ```
+4. Specify the name and location of the input files, if different from the names and locations already in the notebook.
+5. Run all cells.
+
 ## Improvements
 A number of improvements are possible.
  * Using a library such as rpy2 to call R from within Python would eliminate the need for the bash scripting, the complex command-line arguments, and the use of temporary files, which would reduce the apparent complexity of the process.
