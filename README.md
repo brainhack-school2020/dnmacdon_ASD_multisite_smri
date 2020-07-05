@@ -81,7 +81,8 @@ The docker container was configured to run the pipeline bash script at startup i
 ## Deliverables
 Note that the deliverables changes somewhat over the course of the project, and are more extensive than the original conception.
 ### Deliverable 1: Github Repository
-The [Github repository](https://github.com/brainhack-school2020/dnmacdon_ASD_multisite_smri) contains:
+The [Github repository](https://github.com/brainhack-school2020/dnmacdon_ASD_multisite_smri) contains the following directories:
+
  * Data, generated from the [ABIDE](http://fcon_1000.projects.nitrc.org/indi/abide/) dataset as described above.
  * Code for the analysis "pipeline" using R and Python
  * Code used to generate the docker container in which the pipeline runs
@@ -93,6 +94,16 @@ The [Github repository](https://github.com/brainhack-school2020/dnmacdon_ASD_mul
 The structure of the repository is shown below:
 
 ![Repository Structure](images/RepoTree.png)
+
+| File/Directory    | Content |
+| code              | Jupyter notebooks and pipeline code |
+| docker            | Contains scripts used to create docker container |
+| images            | Images used in this README.md |
+| input             | Default input directory for the pipeline |
+| output            | Default output directory for the pipeline |
+| Week_3_Deliverables_Data_Visualization | Deliverables for Week 3 of Brainhack School |
+| harmonization.yml | conda environment description for the pipeline and the Jupyter notebooks |
+
 
 ### Deliverable 2: Mini-Pipeline to test ComBat Data Harmonization
 The pipeline takes as input a .csv file containing the data: volumes for each subcortical structure for each participant, as well as ASD diagnosis, Age, Sex, Total Brain Volume, Imaging Site, and Quality Control (QC) values describing the quality of each segmentation. Its output consists of two files: a .csv file in which the subcortical volumes and total brain volume have been harmonized using ComBat, and a forest plot showing the effect sizes of diagnosis on subcortical volumes, while controlling for Age, Sex, and Total Brain Volume. The forest plot shows the results of a linear model fit on the harmonized data, a linear model fit on the unharmonized data with Site as a covariate, and a linear mixed-effects model fit on the unharmonized data with Site as a random factor (random intercept).
