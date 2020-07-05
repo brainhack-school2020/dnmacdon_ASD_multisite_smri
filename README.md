@@ -19,14 +19,14 @@ I would also like to:
  * Use the tools we have been learning about to make my project more transparent, easy to maintain, reproducible, and open to collaboration.
  * If time permits, find a way to compare these three site harmonization techniques systematically.
 
-### Tools 
-This project makes use of:
+### Tools Learned 
+Tools learned and used during this project include:
  * git and github for version control, code sharing, project management, and collaboration
  * Bash scripting
  * Jupyter notebooks
- * Python, including packages for linear regression and mixed models (numpy, statsmodels) and data manipulation (pandas)
  * Conda for virtualization, to improve reproducibility
  * Python libraries for data manipulation (pandas), visualization (matplotlib, Seaborn) and analysis (numpy, statsmodels)
+ * Interactive figures in Python using ipywidgets
  * [ComBat](https://github.com/Jfortin1/ComBatHarmonization)
  * R, for using ComBat and for some data visualization
  * Docker, to containerize the R- and Python-based pipeline and improve reproducibility
@@ -78,14 +78,6 @@ I used [neurodocker 0.7.0](https://github.com/ReproNim/neurodocker) to create th
 
 The docker container was configured to run the pipeline bash script at startup in non-interactive mode. Input and output directories are set on the command line. All code that is run in the Docker container is provided on the command line (i.e. it has not been built in to the container). This is to allow for modifications, for example to use it on a different dataset, while maintaining the same environment. That said, most options are specified on the command line, so it may not be necessary to modify the code.
 
-### Tools Learned
-* git and github
-* Statistical analysis using python, particularly linear mixed effect models
-* Data visualization libraries in python
-* Virtualization for python using conda
-* ComBat for site harmonization
-* Docker for containerization
- 
 ## Deliverables
 Note that the deliverables changes somewhat over the course of the project, and are more extensive than the original conception.
 ### Deliverable 1: Github Repository
@@ -128,9 +120,17 @@ The pipeline uses both Python and R. While virtualizing Python environments is r
  * Dockerfile: the specification file for the Docker container, build using the scripts above.
 
 ## Results
- 1. Combat harmonization shifted the subcortical volume distributions, typically subtly.
- 2. The effects of ASD diagnosis on subcortical volumes were generally non-significant using all three measures.
- 3. Cohen's _d_ effect sizes and confidence intervals were similar across all three methods.
+ 1. Differences between sites included different age distributions, meaning that different sites were sampling different populations. This indicates that there is biological variability between sites that should be preserved. Below are two views on the age distributions.
+
+![Age Distribution 1](images/age_dist1.png) ![Age Distribution 2](images/age_dist2.png)
+
+ 2. Combat harmonization shifted the subcortical volume distributions, typically subtly. The figure below shows one example, for the left globus pallidus. Harmonized volumes are in brown, unharmonized in blue.
+
+![Harmonization](images/harm_dist_LGP.png)
+
+
+ 3. The effects of ASD diagnosis on subcortical volumes were generally non-significant using all three measures.
+ 4. Cohen's _d_ effect sizes and confidence intervals were similar across all three methods.
 ![Forest Plot](output/forest-plot.png)
 
 ## Instructions
