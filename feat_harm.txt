@@ -1,7 +1,0 @@
-L_str_vol
-L_thal_vol
-L_GP_vol
-R_str_vol
-R_thal_vol
-R_GP_vol
-TBV

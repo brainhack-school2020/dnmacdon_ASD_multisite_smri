@@ -98,6 +98,9 @@ The [Github repository](https://github.com/brainhack-school2020/dnmacdon_ASD_mul
  * Examples of visualizations created using the pipeline and notebooks
  * The slides used for the final Brainhack School presentation
 
+The structure of the repository is shown below:
+![Repository Structure](images/RepoTree.png)
+
 ### Deliverable 2: Mini-Pipeline to test ComBat Data Harmonization
 The pipeline takes as input a .csv file containing the data: volumes for each subcortical structure for each participant, as well as ASD diagnosis, Age, Sex, Total Brain Volume, Imaging Site, and Quality Control (QC) values describing the quality of each segmentation. Its output consists of two files: a .csv file in which the subcortical volumes and total brain volume have been harmonized using ComBat, and a forest plot showing the effect sizes of diagnosis on subcortical volumes, while controlling for Age, Sex, and Total Brain Volume. The forest plot shows the results of a linear model fit on the harmonized data, a linear model fit on the unharmonized data with Site as a covariate, and a linear mixed-effects model fit on the unharmonized data with Site as a random factor (random intercept).
 
